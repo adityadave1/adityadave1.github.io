@@ -1,483 +1,421 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>3D Brain Viewer</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            overflow: hidden; /* Prevent background scrolling when a modal is open */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Dave | Neural Engineering Portfolio</title>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Import Map -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
         }
-
-        /* Modal container styles */
-        .modal-container {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 10px;
-            border-radius: 10px;
-            width: 45%;
-            max-height: 80%; /* Keep modal height within 80% of the screen */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            animation: fadeIn 0.4s;
-            max-height: calc(100vh - 210px);
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding: 10px;
-            
-        }
-
-        .modal-header h2 {
-            margin: 0;
-        }
-
-        .close {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;} 
-            to {opacity: 1;}
-        }
-
-        /* Flexbox layout for side by side modals */
-        .modal-flexbox {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px; /* Space between modals */
-            overflow: auto;
-        }
-
-        Image auto-resizing
-        .frontal-info img,
-        .experience-content img {
-            width: 100%;
-            height: auto;
-            max-width: 100%;
-            max-height: 200px; /* Adjust this value to control the maximum height of the images */
-            margin-bottom: 15px;
-            border-radius: 8px;
-            object-fit: contain; /* Ensure the image scales correctly within the space */
-        }
-
-        .image-container {
-    display: flex;
-    justify-content: space-between; /* Adjust spacing between images */
-  }
-    /* Page Title Styling */
-    .page-title {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      padding: 10px;
-      background-color: #000; /* Black background */
-      color: #fff; /* White text */
-    }
-
-    /* Subtitle Styling */
-    .page-subtitle {
-      text-align: center;
-      font-size: 1.2em;
-      margin-bottom: 0px;
-      padding: 5px;
-      background-color: #000; /* Black background */
-      color: #fff; /* White text */
-    }
-    .title-container {
-        position: absolute;
-      top: 0;
-      width: 100%;
-      background-color: #000; /* Black background */
-      color: #fff; /* White text */
-      text-align: center;
-      padding: 10px 10px; /* Reduced padding to minimize space */
-      z-index: 0; /* Set z-index behind the canvas */
-      pointer-events: none; /* Allows clicks to pass through to the Three.js scene */
-    }
-
-    </style>
-<!-- Write script lines using unpkg.com CDN to import threejs and addon-->
-<script type="importmap">
-  {
-    "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-    }
-  }
-</script>
+      }
+    </script>
 </head>
+
 <body>
-    <div class="title-container">
-        <h3 class="page-title">Inside the Brain of Aditya </h3>
-        <p class="page-subtitle">Click and Rotate the brain's lobes to learn more about Aditya's journey through research, volunteering, medicine, music, and innovation.</p>
-      
-    </div>
-    <!-- Modal Container that will hold both modals -->
-     <!--Frontal Lobe -->
-     <div id="frontalModals" class="modal-container">
-        <div class="modal-flexbox">
-            <!-- First Modal: Brain Lobe Explanation -->
-            <div id="brainModal1" class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle1">Frontal Lobe</h2>
-                    <span class="close" id="closeModal1">&times;</span>
-                </div>
-                <div class="frontal-info">
-                    <title>The Frontal Lobe: A Comprehensive Overview</title>
-                </head>
-                <body>
-                  <h2>The Frontal Lobe: A Comprehensive Overview</h2>
-                    <img src="images/frontalLobe.jpeg" alt="Frontal Lobe">
-                  <p>The frontal lobe is the largest lobe of the human brain, located at the front of the brain behind the forehead. It plays a crucial role in higher-order cognitive functions, personality, and voluntary movement.</p>
-                
-                  <h3>Key Functions of the Frontal Lobe:</h3>
-                
-                  <ul>
-                    <li><strong>Executive Functions:</strong>
-                      <ul>
-                        <li><strong>Decision-making:</strong> The frontal lobe helps us weigh options and make informed choices.</li>
-                        <li><strong>Planning:</strong> It is involved in planning and organizing tasks and sequences of actions.</li>
-                        <li><strong>Problem-solving:</strong> The frontal lobe assists in identifying and resolving problems.</li>
-                        <li><strong>Inhibition:</strong> It helps us control impulses and regulate our behavior.</li>
-                      </ul>
-                    </li>
-                    <li><strong>Personality and Social Behavior:</strong>
-                      <ul>
-                        <li><strong>Empathy:</strong> The frontal lobe is involved in understanding and responding to the emotions of others.</li>
-                        <li><strong>Social skills:</strong> It helps us interact appropriately with others and follow social norms.</li>
-                        <li><strong>Personality traits:</strong> The frontal lobe is associated with personality characteristics such as assertiveness, conscientiousness, and extroversion.</li>
-                      </ul>
-                    </li>
-                    <li><strong>Motor Function:</strong>
-                      <ul>
-                        <li><strong>Voluntary movement:</strong> The primary motor cortex in the frontal lobe controls voluntary muscle movements.</li>
-                        <li><strong>Motor planning:</strong> It helps us plan and execute complex movements.</li>
-                      </ul>
-                    </li>
-                  </ul>
-                
-                  <h3>Important Structures of the Frontal Lobe:</h3>
-                
-                  <ul>
-                    <li><strong>Prefrontal cortex:</strong> The largest part of the frontal lobe, it is responsible for higher-order cognitive functions.</li>
-                    <li><strong>Motor cortex:</strong> Located in the precentral gyrus, it controls voluntary movements.</li>
-                    <li><strong>Broca's area:</strong> Found in the left hemisphere, it is involved in language production.</li>
-                  </ul>
-                
-                </div>
+
+    <!-- Loading / Boot Screen -->
+    <div id="boot-screen">
+        <div class="boot-content">
+            <div class="terminal-text">
+                <p>> INITIALIZING NEURAL INTERFACE...</p>
+                <p>> LOADING CORTICAL DATA...</p>
+                <p>> SYNCHRONIZING HEMISPHERES...</p>
             </div>
-
-            <!-- Second Modal: Experience -->
-            <div id="experienceModal1" class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle2">Entrepreneurship & Innovation</h2>
-                    <span class="close" id="closeModal2">&times;</span>
-                </div>
-                <div class="experience-content">
-                    <h3>Applying Executive Function and Creativity</h3>
-                    <p>
-                        My involvement with <strong>AxisMED</strong>, <strong>MedLaunch</strong>, and <strong>Engineering Open House</strong> has been instrumental in developing my leadership, decision-making, and innovative thinking&ndash;&ndash;key functions associated with the Frontal Lobe. Through these organizations, I have worked on medical technologies and assistive devices, leveraging <strong>problem-solving</strong> and <strong>creative thinking</strong> to design innovate, interdisciplinary solutions that address real-world challenges in healthcare.
-                    </p>
-                    
-                        <img src="images/axismed.png" alt="axismed" width="425" height="460">
-                        <img src="images/medlaunch.jpg" alt="medlaunch" width="425" height="460">
-                    
-                    <p>
-                        The <strong>Stamps Scholarship</strong> has been a driving force behind these experiences, providing me with the resources and opportunities to expand my entrepreneurial skills. It has allowed me to push the boundaries of innovation and apply the Frontal Lobe's core functions in leadership roles and technology development.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Parietal Lobe -->
-    <div id="parietalModals" class="modal-container">
-        <div class="modal-flexbox">
-            <!-- First Modal: Brain Lobe Explanation -->
-            <div id="brainModal1" class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle1">Parietal Lobe</h2>
-                    <span class="close" id="closeModal1">&times;</span>
-                </div>
-                <h2>The Parietal Lobe: A Comprehensive Overview</h2>
-                <img src="images/parietalLobe.jpeg" alt="Parietal Lobe">
-  <p>The parietal lobe is a crucial region of the brain located behind the central sulcus and above the temporal lobe. It plays a pivotal role in processing sensory information, understanding spatial relationships, and navigating the environment.</p>
-
-  <h3>Key Functions of the Parietal Lobe:</h3>
-
-  <ul>
-    <li><strong>Sensory Integration:</strong>
-      <ul>
-        <li><strong>Somatosensation:</strong> The parietal lobe receives and processes sensory information from the body, including touch, temperature, pain, and proprioception (the sense of body position).</li>
-        <li><strong>Nociception:</strong> It plays a crucial role in perceiving and responding to pain.</li>
-        <li><strong>Tactile perception:</strong> The parietal lobe helps us recognize objects by touch and discriminate between different textures.</li>
-      </ul>
-    </li>
-    <li><strong>Spatial Awareness:</strong>
-      <ul>
-        <li><strong>Spatial attention:</strong> It helps us focus our attention on specific locations in space.</li>
-        <li><strong>Spatial working memory:</strong> It allows us to hold and manipulate spatial information in our minds.</li>
-        <li><strong>Visual-spatial processing:</strong> The parietal lobe is involved in interpreting visual information related to space, such as depth perception, distance estimation, and object location.</li>
-      </ul>
-    </li>
-    <li><strong>Number Processing:</strong>
-      <ul>
-        <li><strong>Numerosity:</strong> It contributes to our ability to represent and manipulate numbers.</li>
-        <li><strong>Calculation:</strong> The parietal lobe is involved in performing mathematical operations.</li>
-      </ul>
-    </li>
-    <li><strong>Body Representation:</strong>
-      <ul>
-        <li><strong>Body schema:</strong> It creates and maintains a mental representation of our own bodies.</li>
-        <li><strong>Motor planning:</strong> The parietal lobe contributes to planning and executing movements.</li>
-      </ul>
-    </li>
-  </ul>
-  <p><strong>References:</strong></p>
-<ul>
-  <li>Bear, M. F., Connors, B. W., & Paradiso, M. A. (2016). Neuroscience: Exploring the Brain (4th ed.). Lippincott Williams & Wilkins.</li>
-</ul>
-            </div>
-
-            <!-- Second Modal: Experience -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle2">Volunteering and Community Service</h2>
-                    <span class="close" id="closeModal2">&times;</span>
-                </div>
-                <h3>The Power of Connection in a Community</h3>
-                <p id="modalDescription2">Experiencing One Winter Night was a profoundly impactful experience for me. At an event focused on spending a night outside in the cold and facing the harsh elements to better understand the struggles of homelessness, my parietal lobe was firing on all ends, reacting to the harsh conditions. It was a humbling reminder of the fragility of human comfort and a call to action to use my privilege to help others.</p>
-                <img src="images/own.png" alt="OWN">
-                <p id="modalDescription2">I gained a deeper understanding of the physical and emotional hardships that many people endure on a daily basis. This experience has ignited a desire within me to make a more significant impact on the lives of those in need. This year, I hope to lead our efforts and get involved with the organization C-U at Home.</p>
-                <img src="images/ccchc.png" alt="ccchc">
-                <p>Working as a triage volunteer at the Champaign County Christian Health Center (CCHCH) has been a deeply rewarding experience. I've had the privilege of witnessing firsthand the positive impact that accessible healthcare can have on people's lives.</p>
-
-                <p>As a triage volunteer, I've been able to play a crucial role in ensuring that patients receive the care they need, when they need it. From greeting patients at the door to directing them to the appropriate medical providers, I've been able to make a tangible difference in their experience.</p>
-
-                <p>One of the most rewarding aspects of my time at CCHCH has been the opportunity to connect with patients on a personal level. I've listened to their stories, offered support, and helped alleviate their anxieties. It's been incredibly fulfilling to know that I've played a small part in helping patients feel better and regain their health.</p>
-
-                <p>My experiences at CCHCH have not only strengthened my clinical skills but have also deepened my empathy and compassion. I've learned the importance of treating every patient with respect and dignity, regardless of their circumstances.</p>
-
-                <p>I'm truly grateful for the opportunity to serve my community as a triage volunteer at CCHCH. It's been a life-changing experience that has shaped me both personally and professionally.</p>
-
+            <div class="progress-bar">
+                <div class="fill"></div>
             </div>
         </div>
     </div>
 
-<!--Temporal Lobe -->
-<div id="temporalModals" class="modal-container">
-    <div class="modal-flexbox">
-        <!-- First Modal: Brain Lobe Explanation -->
-        <div id="brainModal1" class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle1">Temporal Lobe</h2>
-                <span class="close" id="closeModal1">&times;</span>
+    <!-- 3D Scene Container -->
+    <div id="canvas-container"></div>
+
+    <!-- UI Overlay (Heads Up Display) -->
+    <div class="ui-layer">
+        <header class="header">
+            <div class="brand">
+                <h1>Aditya Dave</h1>
+                <p>Neural Engineering @ UIUC</p>
             </div>
-            <title>The Temporal Lobe: A Comprehensive Overview</title>
-                <h2>The Temporal Lobe: A Comprehensive Overview</h2>
-                    <img src="images/temporal.png" alt="Temporal Lobe" width="300" height="220">
-                <p>The temporal lobe is located on the sides of the brain, below the lateral fissure. It plays a crucial role in auditory processing, memory formation, and emotion regulation.</p>
+            <nav class="nav-links">
+                <a href="#" onclick="toggleProfile(true)">About</a>
+                <a href="mailto:adave26@illinois.edu">Contact</a>
+            </nav>
+        </header>
 
-                <h3>Key Functions of the Temporal Lobe:</h3>
+        <div class="instructions">
+            <p>Click and Rotate the brain's lobes to learn more about Aditya's journey through research, volunteering,
+                medicine, music, and innovation.</p>
+        </div>
+    </div>
 
-                <ul>
-                    <li><strong>Auditory Processing:</strong>
-                    <ul>
-                        <li><strong>Hearing:</strong> The primary auditory cortex in the temporal lobe receives and processes auditory information.</li>
-                        <li><strong>Differentiation:</strong> This is essential for musicians to recognize and differentiate between different pitches, rhythms, and timbres.</li>
-                        <li><strong>Speech recognition:</strong> Wernicke's area, located in the left temporal lobe, is involved in language comprehension.</li>
+    <div id="profile-overlay">
+        <div class="bio-container">
+            <button class="close-profile-btn" onclick="toggleProfile(false)">&times;</button>
+            <div class="bio-content">
+                <div class="bio-left">
+                    <div class="bio-avatar">
+                        <img src="images/headshot.jpg" alt="Aditya Dave">
+                    </div>
+                    <div class="bio-hobbies">
+                        <h3>Beyond Engineering</h3>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <span class="activity-icon">🎻</span>
+                                <span>Cellist</span>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-icon">🏔️</span>
+                                <span>Nature & Hiking</span>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-icon">🏉</span>
+                                <span>Sports Fan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bio-right">
+                    <h1>Aditya Dave</h1>
+                    <p class="subtitle">Neural Engineering @ UIUC</p>
+
+                    <div class="bio-text">
+                        <p>I am an aspiring physician-innovator bridging the gap between clinical neuroscience and
+                            engineering design.</p>
+                        <p>My passion lies in improving quality of life through interdisciplinary solutions—whether
+                            that's through novel medical devices, complex data analysis, or direct community service.
+                        </p>
+                        <p>Currently, I am a Stamps Scholar at the University of Illinois Urbana-Champaign, where I
+                            combine my coursework in Neural Engineering with active clinical roles and leadership in
+                            student entrepreneurship.</p>
+                    </div>
+
+                    <div class="bio-highlights">
+                        <h3>Core Focus</h3>
+                        <div class="tag-cloud">
+                            <span class="tag-pill">Medical Innovation</span>
+                            <span class="tag-pill">Clinical Research</span>
+                            <span class="tag-pill">Neural Engineering</span>
+                            <span class="tag-pill">Patient Advocacy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Side Panel / Drawer -->
+    <aside id="info-drawer" class="drawer">
+        <div class="drawer-header">
+            <h2 id="drawer-title">Section Title</h2>
+            <button class="close-btn" id="drawer-close">&times;</button>
+        </div>
+        <div class="drawer-content" id="drawer-body">
+            <!-- Content will be injected here via JavaScript -->
+        </div>
+    </aside>
+
+    <!-- Hidden Content Templates (Data Source) -->
+    <div id="content-data" style="display: none;">
+
+        <!-- Frontal Lobe: Entrepreneurship -->
+        <div data-category="frontal">
+            <div class="experience-item" style="border-color: var(--accent-pink);">
+                <span class="meta">Featured Venture | 2025 - Present</span>
+                <h3>Cor</h3>
+                <p><strong>Co-Founder & COO</strong>. Revolutionizing coronary artery disease treatment through dynamic
+                    ML software integrated into wearable ECG tech.</p>
+                <div class="tags">
+                    <span class="tag">Moonshot Idea Award Finalist</span>
+                    <span class="tag">UIUC TE598 Accelerator</span>
+                    <span class="tag">Machine Learning</span>
+                    <span class="tag">Wearable Tech</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Leadership | 2023 - Present</span>
+                <h3>MedLaunch</h3>
+                <p><strong>Professional Development Director</strong>. Managing technical workshops and industry
+                    outreach for a student-led organization focused on assistive devices.</p>
+                <img src="images/medlaunch.jpg" class="content-img" alt="MedLaunch Team">
+                <div class="tags">
+                    <span class="tag">Project Management</span>
+                    <span class="tag">Technical Workshops</span>
+                    <span class="tag">Assistive Tech</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Venture | 2023 - 2024</span>
+                <h3>Breast Cancer Detection</h3>
+                <p>Co-Founder. Spearheaded design of a point-of-care screening test.</p>
+                <div class="tags">
+                    <span class="tag">Cozad AWARE Prize</span>
+                    <span class="tag">Commitment to Entrepreneurship Prize</span>
+                    <span class="tag">Biomedical Design</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Parietal Lobe: Engineering -->
+        <div data-category="parietal">
+            <div class="experience-item" style="border-color: var(--accent-green);">
+                <span class="meta">Engineering Project | Sep 2025 - Present</span>
+                <h3>Vision Swim</h3>
+                <p>Building a wearable guidance system with haptic feedback and computer vision to enable safe,
+                    independent swimming for a user with low vision.</p>
+                <!-- Using MedLaunch image as placeholder/context if specific one doesn't exist, or none -->
+                <div class="tags"><span class="tag">Computer Vision</span><span class="tag">Haptics</span><span
+                        class="tag">Python</span><span class="tag">Hardware</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Engineering Project | Sep 2024 - Apr 2025</span>
+                <h3>SeizureSense</h3>
+                <p>Architected a multi-modal alarm system (bed-shaker + lights) for deaf parents to monitor their
+                    daughter's nighttime seizures.</p>
+                <div class="tags"><span class="tag">Arduino</span><span class="tag">Circuit Design</span><span
+                        class="tag">CAD</span><span class="tag">User-Centered Design</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Engineering Project | Sep 2023 - Apr 2024</span>
+                <h3>J-Walk</h3>
+                <p>Re-engineered a gait-trainer for a user with cerebral palsy, fabricating a robust aluminum and NPVC
+                    foam solution using Fusion360.</p>
+                <div class="tags"><span class="tag">Fusion360</span><span class="tag">Fabrication</span><span
+                        class="tag">Mechanical Design</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Biomedical Engineering | Dec 2023 - Apr 2024</span>
+                <h3>DIRE Detect</h3>
+                <p>Developed a CNN-based diagnostic tool to identify ocular diseases for low-resource settings.
+                    Presented at UIUC Engineering Open House.</p>
+                <div class="tags"><span class="tag">Machine Learning</span><span class="tag">CNN</span><span
+                        class="tag">Global Health</span></div>
+            </div>
+        </div>
+
+        <!-- Occipital Lobe: Research -->
+        <div data-category="occipital">
+            <div class="experience-item" style="border-color: var(--accent-blue);">
+                <span class="meta">Research Asst | Aug 2025 - Present</span>
+                <h3>Northwestern Feinberg School of Medicine</h3>
+                <p>Analyzing post-operative spine surgery recovery using wearable metrics (Fitbit) and nonlinear
+                    mixed-effects modeling.</p>
+                <div class="tags"><span class="tag">Data Analysis</span><span class="tag">R</span><span
+                        class="tag">Nonlinear Modeling</span><span class="tag">Clinical Research</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Research Asst | Jan 2024 - Sep 2025</span>
+                <h3>Analytical Chemistry Neuroscience Lab</h3>
+                <p>Utilized LC-MS to measure peptides in neuronal tissue. Partnered with NASA to explore extracellular
+                    vesicles in space travel contexts.</p>
+                <img src="images/research_poster.png" class="content-img" alt="Research Poster">
+                <div class="tags"><span class="tag">LC-MS</span><span class="tag">Proteomics</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Research Fellow | Summer 2024</span>
+                <h3>NITMB</h3>
+                <p>National Institute for Theory and Mathematics in Biology. Identified neuron types in single-cell fly
+                    atlases by determining the effectiveness of similarity measures.</p>
+                <img src="images/nitmb.png" class="content-img" alt="NITMB Research">
+                <div class="tags"><span class="tag">Bioinformatics</span><span class="tag">Computational
+                        Biology</span><span class="tag">Math Modeling</span></div>
+            </div>
+        </div>
+
+        <!-- Temporal Lobe: Arts & Academics -->
+        <div data-category="temporal">
+            <div class="experience-item" style="border-color: #ffd700;">
+                <span class="meta">Founder & President</span>
+                <h3>Film Score Orchestra</h3>
+                <p>Founded a full orchestra ensemble to perform film music. Manage recruitment, rehearsals, and
+                    performances as President and Cellist.</p>
+                <img src="images/fso1.jpeg" class="content-img" alt="FSO Performance">
+                <div class="tags"><span class="tag">Leadership</span><span class="tag">Cello</span><span
+                        class="tag">Arts Administration</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Teaching & Mentorship</span>
+                <h3>Grainger CARE Tutor</h3>
+                <p><strong>Center for Academic Resources in Engineering</strong>. Providing peer tutoring for
+                    underclassmen in foundational math, physics, chemistry, and biology courses, as well as engineering
+                    prerequisites.</p>
+                <div class="tags"><span class="tag">Mentorship</span><span class="tag">Academic Success</span><span
+                        class="tag">STEM Education</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Education</span>
+                <h3>University of Illinois Urbana-Champaign</h3>
+                <p>B.S. Neural Engineering, Stamps Scholar.<br><strong>GPA:</strong> 3.89/4.0</p>
+                <div class="tags"><span class="tag">Neural Engineering</span><span class="tag">Stamps Scholar</span>
+                </div>
+                <div class="coursework"
+                    style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--glass-border);">
+                    <p
+                        style="font-size: 0.8rem; letter-spacing: 0.05em; color: var(--accent-blue); text-transform: uppercase;">
+                        Relevant Coursework</p>
+                    <ul style="font-size: 0.85rem; color: var(--text-secondary); padding-left: 20px;">
+                        <li><strong>NE 330</strong>: Neuroscience for Engineers</li>
+                        <li><strong>NE 412</strong>: Neural Data Analysis</li>
+                        <li><strong>NE 422</strong>: Neuroimaging</li>
+                        <li><strong>NE 410</strong>: Neural Circuits and Systems</li>
                     </ul>
-                    </li>
-                    <li><strong>Memory Formation:</strong>
-                    <ul>
-                        <li><strong>Declarative memory:</strong> The temporal lobe is involved in forming and retrieving explicit memories, such as facts and events.</li>
-                        <li><strong>Semantic memory:</strong> It helps us store and retrieve general knowledge about the world.</li>
-                    </ul>
-                    </li>
-                    <li><strong>Emotion Regulation:</strong>
-                    <ul>
-                        <li><strong>Emotional processing:</strong> The temporal lobe plays a role in recognizing and processing emotions.</li>
-                        <li><strong>Emotional memory:</strong> It helps us associate emotions with memories.</li>
-                    </ul>
-                    </li>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Publications & Talks</span>
+                <h3>Key Output</h3>
+                <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--text-secondary);">
+                    <li><em>Bioengineering 2026</em>: "Machine Learning Integration in Wearable ECGs for Dynamic Cardiac
+                        Monitoring."</li>
+                    <li><em>AANS 2026</em>: "The Impact of Obesity on Post-Operative Recovery Outcomes in Spine
+                        Surgery."</li>
+                    <li><em>ACS 2024</em>: "Computational Analysis of Mass Spectrometry-Based Proteomics Data from
+                        Exercise-Induced Extracellular Vesicles."</li>
                 </ul>
-
-        </div>
-        <!-- Second Modal: Experience -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle2">Musicianship</h2>
-                <span class="close" id="closeModal2">&times;</span>
-            </div>
-            <h2>The Film Score Orchestra</h2>
-
-                <p >Playing the cello for nine years has been a truly enriching experience. Music has always been a passion of mine, and the cello has provided me with a unique outlet for expression and creativity.</p>
-
-                <p>This year, I founded the Film Score Orchestra (FSO). Inspired by my love of film music, I recognized a need for more non-classical focused ensembles on campus. I wanted to create a space where students could come together to explore and perform the music they love.</p>
-                <div class="image-container">
-                <img src="images/fso1.jpeg" alt="Film Score Orchestra" width="450" height="600">
-                <img src="images/fso2.jpeg" alt="Film Score Orchestra"  width="450" height="600">
-                </div>
-                <p>As President of the FSO, I've been responsible for leading the organization's development and growth. From recruiting members to planning rehearsals and performances, I've been deeply involved in every aspect of the orchestra's success. I'm super happy to have a great team with fellow Stamps Scholars Julia, Grayson, and Sofia!</p>
-
-                <p>We're currently hard at work preparing for our first concert, which is just two weeks away. It's been a challenging but rewarding process, and I'm excited to share our music with the campus community.</p>
-               
-            </div>
-    </div>
-</div>
-
-    <!--Occipital Lobe -->
-    <div id="occipitalModals" class="modal-container">
-        <div class="modal-flexbox">
-            <!-- First Modal: Brain Lobe Explanation -->
-            <div id="brainModal1" class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle1">Occipital Lobe</h2>
-                    <span class="close" id="closeModal1">&times;</span>
-                </div>
-                <h2>The Occipital Lobe: A Comprehensive Overview</h2>
-
-  <p>The occipital lobe is located at the back of the brain, responsible for visual processing.</p>
-  <img src="images/occ.jpeg" alt="Occipital Lobe">
-  <h3>Key Functions of the Occipital Lobe:</h3>
-
-  <ul>
-    <li><strong>Visual Perception:</strong>
-      <ul>
-        <li><strong>Primary visual cortex:</strong> Receives and processes visual information from the eyes.</li>
-        <li><strong>Object recognition:</strong> Identifies and recognizes objects in the visual field.</li>
-        <li><strong>Color perception:</strong> Processes color information.</li>
-        <li><strong>Depth perception:</strong> Helps us perceive the three-dimensional world.</li>
-      </ul>
-    </li>
-    <li><strong>Visual Attention:</strong>
-      <ul>
-        <li><strong>Selective attention:</strong> Focuses attention on specific visual stimuli.</li>
-        <li><strong>Spatial attention:</strong> Directs attention to different locations in space.</li>
-      </ul>
-    </li>
-  </ul>
-  <h3>Important Structures of the Occipital Lobe:</h3>
-
-  <ul>
-    <li><strong>Primary visual cortex (V1):</strong> Receives and processes visual information from the eyes.</li>
-    <li><strong>Extrastriate cortex:</strong> Higher-level visual processing areas involved in object recognition, color perception, and motion detection.</li>
-  </ul>
-            </div>
-
-            <!-- Second Modal: Experience -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle2">Undergraduate Research</h2>
-                    <span class="close" id="closeModal2">&times;</span>
-                </div>
-                <h2>The Power of Visualizations and Graphics</h2>
-
-  <p>As an undergraduate researcher working on <strong>LC-MS analytical chemistry in a NASA partnered project, summer research at the National Institute of Theory and Mathematics in Biology, and NIH data analysis</strong>, I've found that the ability to interpret graphs, charts, and visual data is crucial to understanding and success. The occipital lobe, responsible for visual processing, plays a significant role in this ability.</p>
-
-  <p>The occipital lobe's role in processing visual inputs is essential for analyzing complex datasets like those found in LCMS. By accurately interpreting visual representations of data, I can identify patterns, trends, and anomalies that might otherwise be missed.</p>
-
-  <p>Additionally, the occipital lobe's involvement in visual processing is crucial for visualizing patterns in NIH data analysis. By effectively interpreting visual data, I can gain valuable insights into research findings and make informed conclusions.</p>
-           <img src="images/nitmb.png" alt="nitmb" width="870" height="700">
+                <div class="tags"><span class="tag">Publications</span><span class="tag">Presentations</span></div>
             </div>
         </div>
-    </div>
-    <!--Cerebellum Lobe -->
-    <div id="cerebellumModals" class="modal-container">
-        <div class="modal-flexbox">
-            <!-- First Modal: Brain Lobe Explanation -->
-            <div id="brainModal1" class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle1">The Cerebellum</h2>
-                    <span class="close" id="closeModal1">&times;</span>
+
+        <!-- Cerebellum: Clinical -->
+        <div data-category="cerebellum">
+            <div class="experience-item">
+                <span class="meta">Clinical | Sep 2025 - Present</span>
+                <h3>OSF Emergency Department</h3>
+                <p><strong>Emergency Department Technician</strong>. Providing direct patient care, EKGs, splinting, and
+                    triage support in high-acuity settings.</p>
+                <div class="tags"><span class="tag">Patient Care</span><span class="tag">EKG</span><span
+                        class="tag">Triage</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Clinical | Jan 2025 - Sep 2025</span>
+                <h3>OSF Critical Care Unit</h3>
+                <p><strong>Patient Care Technician</strong>. Providing direct patient care in the cardiac critical care
+                    unit, monitoring vitals, and ensuring patient safety. Trained in EKGs and EEGs.</p>
+                <div class="tags"><span class="tag">Critical Care</span><span class="tag">Patient Monitoring</span><span
+                        class="tag">EEG/EKG</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Professional Experience | Mar 2025 - Present</span>
+                <h3>GlobalSurgBox</h3>
+                <p><strong>Video Production Director</strong>. GlobalSurgBox is a low-cost surgical simulator kit
+                    donated to LMICs. I directed the filming, editing, and post-production workflows to create a course
+                    of accessible, high-quality visual content for surgical tutorials.</p>
+                <div class="tags"><span class="tag">Video Production</span><span class="tag">Global Health</span><span
+                        class="tag">Education</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Volunteering | Sep 2024 - Present</span>
+                <h3>Tutoring Chicago</h3>
+                <p>Providing weekly 1:1 tutoring and mentorship to students facing economic barriers. Focusing on
+                    literacy, math skills, and social-emotional development to foster confidence and academic success.
+                </p>
+                <div class="tags">
+                    <span class="tag">Education</span>
+                    <span class="tag">Mentorship</span>
+                    <span class="tag">Community Service</span>
                 </div>
-                <h2>The Cerebellum: A Comprehensive Overview</h2>
-                <img src="images/cerebellum.jpeg" alt="Cerebellum">
-                <p>The cerebellum, located at the back of the brain, plays a crucial role in coordination, balance, and motor control.</p>
-              
-                <h3>Key Functions of the Cerebellum:</h3>
-              
-                <ul>
-                  <li><strong>Motor Coordination:</strong>
-                    <ul>
-                      <li><strong>Fine motor control:</strong> Coordinates precise movements of limbs and body parts.</li>
-                      <li><strong>Balance and posture:</strong> Maintains equilibrium and stability.</li>
-                    </ul>
-                  </li>
-                  <li><strong>Motor Learning:</strong>
-                    <ul>
-                      <li><strong>Habit formation:</strong> Helps in acquiring and refining motor skills.</li>
-                      <li><strong>Timing and sequencing:</strong> Coordinates the timing and sequence of movements.</li>
-                    </ul>
-                  </li>
-                  <li><strong>Cognitive Functions:</strong>
-                    <ul>
-                      <li><strong>Language:</strong> Contributes to language processing and production.</li>
-                      <li><strong>Attention:</strong> Plays a role in regulating attention and focus.</li>
-                    </ul>
-                  </li>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Volunteering</span>
+                <h3>Champaign County Christian Health Center</h3>
+                <p>Working as a triage volunteer at the CCHCH has been deeply rewarding. I play a crucial role in
+                    ensuring patients receive the care they need, connecting with them on a personal level to alleviate
+                    anxieties and offering support.</p>
+                <img src="images/ccchc.png" class="content-img" alt="CCHCH">
+                <p><em>"My experiences at CCHCH have not only strengthened my clinical skills but have also deepened my
+                        empathy and compassion."</em></p>
+                <div class="tags"><span class="tag">Community Service</span><span class="tag">Triage</span><span
+                        class="tag">Patient Advocacy</span></div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Fundraiser</span>
+                <h3>One Winter Night</h3>
+                <p>Experiencing One Winter Night was profound. Spending a night outside in the cold to understand the
+                    struggles of homelessness was a humbling reminder of the fragility of human comfort. This year, I
+                    hope to lead our efforts and get involved with C-U at Home.</p>
+                <img src="images/own.png" class="content-img" alt="One Winter Night">
+                <div class="tags"><span class="tag">Fundraising</span><span class="tag">Homelessness Awareness</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Screening</span>
+                <h3>Illini Medical Screening Society</h3>
+                <p>Providing free health screenings (vitals, lipid panel, glucose) to low-income residents of Champaign
+                    County.</p>
+                <div class="tags"><span class="tag">Health Screenings</span><span class="tag">Community</span></div>
+            </div>
+        </div>
+
+        <!-- About Section (Global Nav) -->
+        <div data-category="about">
+            <h2>About Aditya</h2>
+            <p>I am an aspiring medical professional and engineering student with a diverse innovation & research
+                portfolio.</p>
+            <p>My passion lies in improving the quality of life through interdisciplinary solutions—whether that's
+                through medical devices, data analysis, or community service.</p>
+
+            <div class="experience-item">
+                <span class="meta">Skills</span>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">R</span>
+                    <span class="tag">Matlab</span>
+                    <span class="tag">Fusion360</span>
+                    <span class="tag">Circuit Design</span>
+                    <span class="tag">Soldering</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <span class="meta">Organizations & Honaries</span>
+                <ul class="org-list" style="padding-left: 20px; line-height: 1.8; color: var(--text-secondary);">
+                    <li><strong>Stamps Scholars</strong>: Top 7 merit-based scholarship at UIUC (Scholarship,
+                        Leadership, Service).</li>
+                    <li><strong>Campus Honors Program</strong>: Interdisciplinary coursework with high-achieving peers.
+                    </li>
+                    <li><strong>Phi Delta Epsilon</strong>: International Medical Fraternity.</li>
+                    <li><strong>Biomedical Engineering Society</strong>: Active member.</li>
+                    <li><strong>MedLaunch</strong>: Professional Development Director.</li>
+                    <li><strong>Film Score Orchestra</strong>: Founder & President.</li>
+                    <li><strong>Illini Medical Screening Society</strong>: Screening volunteer.</li>
                 </ul>
-              
-                <h3>Important Structures of the Cerebellum:</h3>
-              
-                <ul>
-                  <li><strong>Cerebellar hemispheres:</strong> The two lateral lobes of the cerebellum.</li>
-                  <li><strong>Vermis:</strong> The central, midline portion of the cerebellum.</li>
-                  <li><strong>Cerebellar cortex:</strong> The outer layer of the cerebellum, responsible for most of its functions.</li>
-                </ul>
-              
-            </div>
-
-            <!-- Second Modal: Experience -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 id="modalTitle2">Potential Career Interests</h2>
-                    <span class="close" id="closeModal2">&times;</span>
-                </div>
-                <h2>Shadowing a Neurosurgeon: An Incredible Experience</h2>
-
-  <p>My experience shadowing a neurosurgeon was truly transformative. Witnessing the intricacies of brain surgery firsthand was not only inspiring and completely captivating, but it also provided me an invaluable look into a life as a physician.</p>
-<div class="image-container">
-  <img src="images/pxa.png" alt="pxa" width="425" height="425">
-<img src="images/brainbiopsy.jpeg" alt="brainbiopsy" width="425" height="425">
-</div>
-  <p>I had the privilege of observing two surgeries: a Pleomorphic Xanthoastrocytoma (PXA) resection and a brain biopsy. The operating room was a bustling environment, with a team of highly skilled professionals working together seamlessly. It was fascinating to see how each member of the team played a crucial role in ensuring the success of the surgery.</p>
-
-  <p>One of the most memorable moments was seeing the human brain exposed. It was a surreal experience to observe the complex anatomy and delicate structures of this vital organ that I have been learning about in class. Although surgeon's precision and skill were truly remarkable, I was struck by the true integration of imaging technology in the operating room, which significantly enhanced the precision and efficiency of the surgeries.</p>
-
-  <p>In addition to the operating room experience, I also had the opportunity to shadow the neurosurgeon in clinic. This provided me with valuable insights into the importance of developing long-term relationships with patients. I learned about the intricacies of academic medicine, including research, teaching, and patient care.</p>
-
-  <p>Overall, shadowing a neurosurgeon was an incredibly enriching experience. It has deepened my understanding of the medical field and reinforced my passion for pursuing a career in healthcare.</p>
             </div>
         </div>
+
     </div>
-    <script type="module" src="/script.js"></script>
+
+    <!-- Main Module Script -->
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
