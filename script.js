@@ -213,7 +213,7 @@ function onMouseClick(event) {
         else if (lobeName.includes('occipital')) lobeName = 'occipital';
         else if (lobeName.includes('cerebellum')) lobeName = 'cerebellum';
 
-        openDrawer(lobeName);
+        openPanels(lobeName);
     }
 }
 
@@ -221,43 +221,76 @@ window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
 
 
-// --- UI / Drawer Logic ---
-window.openDrawer = function (category) {
-    const drawer = document.getElementById('info-drawer');
-    const drawerTitle = document.getElementById('drawer-title');
-    const drawerBody = document.getElementById('drawer-body');
-    const dataSource = document.querySelector(`div[data-category="${category}"]`);
+// --- UI / Panels Logic ---
+window.openPanels = function (category) {
+    const panelsOverlay = document.getElementById('panels-overlay');
 
-    if (dataSource) {
-        drawerTitle.innerText = lobeTitles[category] || category.toUpperCase();
-        drawerBody.innerHTML = dataSource.innerHTML; // Inject content
+    // Left Panel (Info)
+    const leftTitle = document.getElementById('left-panel-title');
+    const leftBody = document.getElementById('left-panel-body');
+    const infoSource = document.querySelector(`div[data-category="${category}-info"]`);
 
-        drawer.classList.add('active');
-        document.body.classList.add('drawer-open');
+    // Right Panel (Experiences)
+    const rightTitle = document.getElementById('right-panel-title');
+    const rightBody = document.getElementById('right-panel-body');
+    const expSource = document.querySelector(`div[data-category="${category}"]`);
 
-        // Shift camera if needed (optional simple tween could go here)
+    if (expSource) {
+        // Set up left panel
+        leftTitle.innerText = "Biological Function";
+        if (infoSource) {
+            leftBody.innerHTML = `<div class="lobe-info-text">${infoSource.innerHTML}</div>`;
+        } else {
+            leftBody.innerHTML = `<p>Information about the ${category} lobe.</p>`;
+        }
+
+        // Set up right panel
+        rightTitle.innerText = lobeTitles[category] || category.toUpperCase();
+        rightBody.innerHTML = expSource.innerHTML;
+
+        panelsOverlay.classList.add('active');
     }
 }
 
-document.getElementById('drawer-close').addEventListener('click', () => {
-    document.getElementById('info-drawer').classList.remove('active');
-    document.body.classList.remove('drawer-open');
+document.getElementById('panels-close').addEventListener('click', () => {
+    document.getElementById('panels-overlay').classList.remove('active');
 });
+
+// Close panels when clicking outside
+document.getElementById('panels-overlay').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('panels-overlay')) {
+        document.getElementById('panels-overlay').classList.remove('active');
+    }
+});
+
 
 // --- Profile Mode Logic ---
 window.toggleProfile = function (show) {
     const overlay = document.getElementById('profile-overlay');
-    const drawer = document.getElementById('info-drawer');
+    const panels = document.getElementById('panels-overlay');
+    const cv = document.getElementById('cv-overlay');
 
     if (show) {
         overlay.classList.add('active');
-        // Close drawer if open
-        if (drawer.classList.contains('active')) {
-            drawer.classList.remove('active');
-            document.body.classList.remove('drawer-open');
-        }
+        if (panels && panels.classList.contains('active')) panels.classList.remove('active');
+        if (cv && cv.classList.contains('active')) cv.classList.remove('active');
     } else {
         overlay.classList.remove('active');
+    }
+}
+
+// --- CV Mode Logic ---
+window.toggleCV = function (show) {
+    const cvOverlay = document.getElementById('cv-overlay');
+    const panels = document.getElementById('panels-overlay');
+    const profile = document.getElementById('profile-overlay');
+
+    if (show) {
+        cvOverlay.classList.add('active');
+        if (panels && panels.classList.contains('active')) panels.classList.remove('active');
+        if (profile && profile.classList.contains('active')) profile.classList.remove('active');
+    } else {
+        cvOverlay.classList.remove('active');
     }
 }
 

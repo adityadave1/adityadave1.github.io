@@ -52,6 +52,7 @@
             </div>
             <nav class="nav-links">
                 <a href="#" onclick="toggleProfile(true)">About</a>
+                <a href="#" onclick="toggleCV(true)">CV</a>
                 <a href="mailto:adave26@illinois.edu">Contact</a>
             </nav>
         </header>
@@ -118,19 +119,491 @@
         </div>
     </div>
 
-    <!-- Side Panel / Drawer -->
-    <aside id="info-drawer" class="drawer">
-        <div class="drawer-header">
-            <h2 id="drawer-title">Section Title</h2>
-            <button class="close-btn" id="drawer-close">&times;</button>
+    <!-- Floating Panels -->
+    <div id="panels-overlay">
+        <button class="close-panels-btn" id="panels-close">&times;</button>
+
+        <div class="panels-container">
+            <!-- Left Panel: Lobe Info -->
+            <div id="left-panel" class="floating-panel">
+                <div class="panel-header">
+                    <h2 id="left-panel-title">Biological Function</h2>
+                </div>
+                <div class="panel-content" id="left-panel-body">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+
+            <!-- Right Panel: Experiences -->
+            <div id="right-panel" class="floating-panel">
+                <div class="panel-header">
+                    <h2 id="right-panel-title">Experiences</h2>
+                </div>
+                <div class="panel-content" id="right-panel-body">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
         </div>
-        <div class="drawer-content" id="drawer-body">
-            <!-- Content will be injected here via JavaScript -->
+    </div>
+
+    <!-- CV Overlay -->
+    <div id="cv-overlay">
+        <div class="cv-container">
+            <div class="cv-header-bar">
+                <h2>Curriculum Vitae</h2>
+                <button class="close-cv-btn" onclick="toggleCV(false)">&times;</button>
+            </div>
+            <div class="cv-content" id="cv-body">
+
+                <div class="cv-header-info">
+                    <h1>Aditya Dave</h1>
+                    <p>(630) 806-1789 | adave26@illinois.edu</p>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Objective</h3>
+                    <p class="cv-text">Aspiring medical professional and engineering student with a diverse innovation &
+                        research portfolio who is a curious learner passionate about improving the quality of life
+                        through interdisciplinary solutions.</p>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Education</h3>
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>University of Illinois Urbana-Champaign</h4>
+                            <span class="cv-date">August 2023 - Present</span>
+                        </div>
+                        <p class="cv-text">Bachelor of Science in Neural Engineering, Stamps Scholar, Chancellor's
+                            Scholar | <strong>GPA: 3.89/4.0</strong></p>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Certifications and Technical Strengths</h3>
+                    <p class="cv-text">Certified Nursing Assistant (CNA), Intuit Quickbooks Certified in
+                        Entrepreneurship. R, Python (Pandas, Matplotlib), Matlab, Arduino, Swift, CAD (Fusion360),
+                        Soldering, Circuit Design, Data Analysis</p>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Research Experience</h3>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Northwestern University Feinberg School of Medicine</h4>
+                            <span class="cv-date">August 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Clinical Research Assistant - Department of Neurosurgery | Chicago,
+                                IL</em></p>
+                        <p class="cv-text">Advised By: Najib El Tecle, M.D.</p>
+                        <p class="cv-text">Analyzing post-operative spine surgery recovery using wearable-derived
+                            metrics from the NIH All of Us Research Program by modeling longitudinal Fitbit step
+                            trajectories with nonlinear mixed-effects methods. Examined obesity as a modifier of
+                            functional recovery, and currently investigating additional clinical risk factors to
+                            identify predictors of delayed post-operative improvement.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Analytical Chemistry Neuroscience Laboratory</h4>
+                            <span class="cv-date">January 2024 - September 2025</span>
+                        </div>
+                        <p class="cv-text"><em>Research Assistant | Champaign, IL</em></p>
+                        <p class="cv-text">Advised By: Jonathan V. Sweedler, Ph.D.</p>
+                        <p class="cv-text">Utilized LC-MS techniques to measure endogenous peptides in neuronal tissue
+                            to understand opioid peptide regulation in sickle cell disease. Explored differences between
+                            normal and exercised extracellular vesicles with NASA to provide therapies for preserving
+                            health during space travel. Conducted computational analysis of high-dimensional, LC-MS
+                            proteomics data, applied statistical clustering, and implemented predictive machine learning
+                            techniques to identify key biomarker differences.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>National Institute for Theory and Mathematics in Biology</h4>
+                            <span class="cv-date">June 2024 - August 2024</span>
+                        </div>
+                        <p class="cv-text"><em>Research Fellow | Evanston, IL</em></p>
+                        <p class="cv-text">Advised By: Dr. William Kath, Ph.D., Marco Gallio, Ph.D</p>
+                        <p class="cv-text">Identified specific neuron types in single-cell fly atlases by determining
+                            the effectiveness of similarity measures and comparison algorithms. Created a translational
+                            tool that bridged a data gap by correlating datasets. Worked in the Department of
+                            Neurobiology and Applied Mathematics and Engineering, funded through the National Science
+                            Foundation at Northwestern University.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Argonne National Laboratory</h4>
+                            <span class="cv-date">August 2021 - May 2023</span>
+                        </div>
+                        <p class="cv-text"><em>Exemplary Student Research Program Team Lead | Lemont, IL</em></p>
+                        <p class="cv-text">Advised By: Olga Antipova, Ph.D., Thomas Irving, Ph.D</p>
+                        <p class="cv-text">Investigated cobalt uptake in various plants using X-ray spectroscopy and
+                            researched the temperature dependence of porcine sarcomere structures using small-angle
+                            X-ray diffraction.</p>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Professional Experience</h3>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Cor</h4>
+                            <span class="cv-date">January 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>co-Founder, COO | Chicago, IL</em></p>
+                        <p class="cv-text">Cor seeks to revolutionize the treatment of coronary artery disease through
+                            dynamic machine learning software that can be directly integrated into current wearable ECG
+                            technology, empowering individuals with an early pre-screening tool that prompts timely
+                            medical follow-up to ultimately prevent heart attacks. Recently honored as an international
+                            Moonshot Idea Award Finalist in November 2025.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Breast Cancer Detection Venture</h4>
+                            <span class="cv-date">September 2023 - July 2024</span>
+                        </div>
+                        <p class="cv-text"><em>co-Founder, Biomedical Engineer | Champaign, IL</em></p>
+                        <p class="cv-text">Spearheaded the biomedical design of a novel, point-of-care test to increase
+                            early breast cancer detection for women under 50 by promoting proactive screening. Presented
+                            the venture's proof-of-concept at the 2024 Cozad New Venture Challenge, where the team was
+                            awarded $750 in funding and won the AWARE and Commitment to Entrepreneurship prizes.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>DIRE Detect</h4>
+                            <span class="cv-date">December 2023 - April 2024</span>
+                        </div>
+                        <p class="cv-text"><em>Biomedical Engineer | Champaign, IL</em></p>
+                        <p class="cv-text">Developed a novel diagnostic tool using a convolutional neural network (CNN)
+                            to identify ocular diseases, creating an alternate screening method to combat preventable
+                            vision loss in low/middle-income countries. This project, aimed at increasing healthcare
+                            accessibility, was selected for presentation at the UIUC Engineering Open House for the
+                            Biomedical Engineering Society in April 2024.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>OSF Emergency Department</h4>
+                            <span class="cv-date">September 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Emergency Department Technician | Urbana, IL</em></p>
+                        <p class="cv-text">Providing direct patient care in the Emergency Department by obtaining
+                            vitals, performing EKGs, assisting with procedures such as splinting and wound care,
+                            supporting triage flow, and coordinating patient transport and preparation in high-acuity
+                            settings.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>OSF Critical Care Unit</h4>
+                            <span class="cv-date">January 2025 - September 2025</span>
+                        </div>
+                        <p class="cv-text"><em>Patient Care Technician | Urbana, IL</em></p>
+                        <p class="cv-text">Providing direct patient care in the cardiac critical care unit by monitoring
+                            vital signs, assisting with activities of daily living, and ensuring patient comfort and
+                            safety. Trained in performing EKGs and EEGs as one of two technicians in the hospital.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Vision Swim</h4>
+                            <span class="cv-date">September 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Engineer @ MedLaunch | Champaign, IL</em></p>
+                        <p class="cv-text">Building a wearable guidance system for a community partner with low vision
+                            due to glaucoma. Currently engineering an assistive device to enable safe, independent
+                            swimming by using computer vision to perform real-time lane line-tracking. This work
+                            involves designing a system that provides directional haptic feedback to alert the user when
+                            veering off course, iterative hardware prototyping to solve device stability and user
+                            comfort, and designing the full electronics schematic as a waterproof solution.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>SeizureSense</h4>
+                            <span class="cv-date">September 2024 - April 2025</span>
+                        </div>
+                        <p class="cv-text"><em>Engineer @ MedLaunch | Champaign, IL</em></p>
+                        <p class="cv-text">Architected an integrated, multi-modal alarm system for a family with deaf
+                            parents to monitor their daughter's nighttime seizures. Constructed a solution that
+                            interfaced a commercial seizure detection kit with a custom-built alert system, translating
+                            seizure alerts into a remote vibrating bed-shaker and bright visual light indicators. This
+                            system, built using CAD modeling and Arduino microcontrollers, provided a critical,
+                            non-auditory alert, improving the family's quality of life and in-home care.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>J-Walk</h4>
+                            <span class="cv-date">September 2023 - April 2024</span>
+                        </div>
+                        <p class="cv-text"><em>Engineer @ MedLaunch | Champaign, IL</em></p>
+                        <p class="cv-text">Partnered with a community member with cerebral palsy to re-engineer a
+                            failing gait-trainer device. Led the mechanical redesign of the walker's handles, utilizing
+                            Fusion360 for CAD modeling and hands-on fabrication techniques to create a robust, ergonomic
+                            solution. Delivered a final product that replaced uncomfortable, non-functional components
+                            with durable, lightweight aluminum and NPVC foam, enabling our partner to maintain daily
+                            mobility and independence.</p>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Output and Presentations</h3>
+
+                    <div class="cv-item">
+                        <h4>Publications</h4>
+                        <p class="cv-text"><strong>Dave A</strong>, Dave A, Moussa ID. The Evolving Role of Artificial
+                            Intelligence and Machine Learning in the Wearable Electrocardiogram: A Primer on
+                            Wearable-Enabled Prediction of Cardiac Dysfunction. Bioengineering. 2026; 13(2):167.
+                            https://doi.org/10.3390/bioengineering13020167</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <h4>Poster Presentations</h4>
+                        <ul class="cv-list">
+                            <li><strong>A. Dave</strong> & N. Tecle. <em>Impact of Obesity on Post-Operative Functional
+                                    Recovery After Spine Surgery: A Wearable-Based Analysis</em>. American Academy of
+                                Neurological Surgeons, San Antonio, May 2026.</li>
+                            <li>R. Sullivan, <strong>A. Dave</strong>, et. al. <em>VisionSwim: Direction Assist For
+                                    Visually Impaired Swimmers</em>. University of Illinois Human-Centered Engineering
+                                Symposium March 2026.</li>
+                            <li>R. Sullivan, <strong>A. Dave</strong>, et. al. <em>SeizureSense</em>. MedLaunch Poster
+                                Symposium April 2025.</li>
+                            <li><strong>A. Dave</strong>, Y. Tan, J. Sweedler. <em>Computational Analysis of Mass
+                                    Spectrometry-Based Proteomics Data from Exercised Induced Extracellular
+                                    Vesicles</em>. Eastern Central Illinois American Chemical Society Conference October
+                                2024.</li>
+                            <li><strong>A. Dave</strong>. <em>Neuron Identification across Gene Expression Datasets
+                                    using Correlation Analysis</em>. National Institute for Theory and Mathematics in
+                                Biology Summer Symposium August 2024.</li>
+                            <li><strong>A. Dave</strong>. <em>Diabetic Retinopathy Identification with Convolutional
+                                    Neural Networks and Machine Learning</em>. University of Illinois Grainger College
+                                of Engineering Open House April 2024.</li>
+                            <li>K. Skurnak, N. Maranowski, <strong>A. Dave</strong>, et. al. <em>J-Walk</em>. MedLaunch
+                                Poster Symposium April 2024.</li>
+                            <li><strong>A. Dave</strong>, S. Leung, S. Mehta, et. al. <em>Utilizing X-Ray Fluorescence
+                                    Microscopy Mapping to Visualize Cobalt’s Distribution in Vegetable Plants</em>.
+                                Argonne National Laboratory Exemplary Student Research Program Symposium 2023.</li>
+                            <li>J. Barker, <strong>A. Dave</strong>, A. Garde, et. al. <em>The Effects of Calcium
+                                    Concentrations on Short and Long Porcine Sarcomeres</em>. Argonne National
+                                Laboratory Exemplary Student Research Program Symposium 2022.</li>
+                        </ul>
+                    </div>
+
+                    <div class="cv-item">
+                        <h4>Pitches</h4>
+                        <p class="cv-text">M. Agrawal, T. Agrawal, <strong>A. Dave</strong>, A. Mercado. <em>An At-home,
+                                Rapid, Non-invasive Screening Modality for Breast Cancer Detection</em>. University of
+                            Illinois Cozad New Venture Challenge 2024. <strong>Awarded the AWARE and Commitment to
+                                Entrepreneurship prizes.</strong></p>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Leadership and Volunteer Work</h3>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>GlobalSurgBox</h4>
+                            <span class="cv-date">March 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Video Production Director | Palo Alto, CA</em></p>
+                        <p class="cv-text">GlobalSurgBox is a low-cost ($25 value), portable surgical simulator kit that
+                            is donated to partner Low- and Middle-Income Countries (LMICs) to enable trainees to
+                            practice a variety of skills regardless of their location, academic affiliation, or resource
+                            stratum. I directed the filming, editing, and post-production workflows to create a course
+                            of accessible, high-quality visual content for surgical tutorials, including knot-tying,
+                            suturing, and advanced procedures.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>MedLaunch</h4>
+                            <span class="cv-date">September 2023 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Professional Development Director | Champaign, IL</em></p>
+                        <p class="cv-text">MedLaunch is a student-led organization focused on working with individuals
+                            with disabilities in the Champaign-Urbana area to deliver human-centered devices that
+                            improve quality of life. As the professional development director, I manage coordinating
+                            technical workshops, handle outreach to industry professionals, and organize professional
+                            events like career panels for our general members.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Film Score Orchestra UIUC</h4>
+                            <span class="cv-date">May 2024 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Founder, President, Cellist | Champaign, IL</em></p>
+                        <p class="cv-text">Founded the Film Score Orchestra as a registered student organization at the
+                            University of Illinois Urbana-Champaign after noticing a lack of non-classical focused
+                            ensembles. This full orchestra ensemble, open to anyone, performs music featured in famous
+                            films for the Champaign-Urbana community.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Center for Academic Resources in Engineering (CARE)</h4>
+                            <span class="cv-date">Jan 2026 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Tutor, Exam Review Lead | Urbana, IL</em></p>
+                        <p class="cv-text">CARE is a peer-led learning community at the Grainger College of Engineering
+                            that provides a collaborative environment for engineering students to excel through
+                            mentorship and academic resources. I help facilitate this through drop-in tutoring hours and
+                            exam review sessions for a range of courses.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Illini Medical Screening Society</h4>
+                            <span class="cv-date">August 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Screening Volunteer | Champaign, IL</em></p>
+                        <p class="cv-text">The Illini Medical Screening Society provides free health screenings to the
+                            low-income and uninsured citizens of Champaign County. During screenings, we take basic
+                            vitals, conduct a lipid panel, and check glucose levels, ultimately referring at-risk
+                            patients to local free health clinics. I also assist with community outreach initiatives to
+                            expand awareness and participation in preventative healthcare programs.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Tutoring Chicago</h4>
+                            <span class="cv-date">October 2025 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Volunteer Tutor | Chicago, IL</em></p>
+                        <p class="cv-text">Tutoring Chicago delivers the power of education to children facing economic
+                            barriers through long-term, one-to-one tutoring and high-quality programming. I provide
+                            direct, weekly one-on-one mentorship and academic support to a 9th-grade student in math,
+                            reading, and science. I hope to not only build academic abilities but also foster confidence
+                            and developmental growth.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>Champaign County Christian Health Center</h4>
+                            <span class="cv-date">January 2024 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Triage Volunteer | Champaign, IL</em></p>
+                        <p class="cv-text">The Champaign County Christian Health Center is a free, faith-based clinic
+                            for the under-insured. Primary responsibilities include patient triage and communicating
+                            chief complaints to the on-call physician, with special attention on patient education. Also
+                            working to improve outreach for the clinic through educational events in the local
+                            community.</p>
+                    </div>
+
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>One Winter Night, C-U at Home</h4>
+                            <span class="cv-date">February 2024 - Present</span>
+                        </div>
+                        <p class="cv-text"><em>Fundraiser and Participant | Champaign, IL</em></p>
+                        <p class="cv-text">One Winter Night (OWN) is an annual outdoor winter event that provides a
+                            powerful opportunity for the community to learn about homelessness, build empathy for the
+                            people we serve, and raise funds and awareness by spending the night outside. As a member of
+                            the Illinois Stamps Community, I help with UIUC fundraisers, outreach, and participation in
+                            this experience. Raised over $1,000 in 2025.</p>
+                    </div>
+                </div>
+
+                <div class="cv-section">
+                    <h3 class="cv-section-title">Organizations</h3>
+                    <div class="cv-item">
+                        <div class="cv-item-header">
+                            <h4>University of Illinois at Urbana-Champaign</h4>
+                            <span class="cv-date">August 2023 - May 2027</span>
+                        </div>
+                        <p class="cv-text">Film Score Orchestra, MedLaunch UIUC, Illini Medical Screening Society,
+                            Biomedical Engineering Society, Phi Delta Epsilon Medical Fraternity, Campus Honors Program
+                        </p>
+                    </div>
+                </div>
+
+                <div class="cv-section borderless-bottom">
+                    <h3 class="cv-section-title">Achievements</h3>
+                    <ul class="cv-list">
+                        <li>Selected as 1 of 7 students to receive the Stamps Scholarship, the most selective,
+                            merit-based, 4-year scholarship offered at Illinois, founded on the pillars of Scholarship,
+                            Leadership, Progress, and Service.</li>
+                        <li>Chancellor's Scholar in the Grainger College of Engineering, where students interact in
+                            diverse coursework of the Campus Honors Program to impact the world.</li>
+                        <li>National Championship Runner-Up in Financial Analysis (Business Professionals of America)
+                        </li>
+                        <li>Ranked 4th Nationally in Entrepreneurship (Business Professionals of America)</li>
+                        <li>State Championship Ranked 8th (IHSA Speech)</li>
+                        <li>National AP Scholar, Seal of Biliteracy (Spanish)</li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
-    </aside>
+    </div>
 
     <!-- Hidden Content Templates (Data Source) -->
     <div id="content-data" style="display: none;">
+
+        <!-- Lobe Descriptions -->
+        <div data-category="frontal-info">
+            <img src="images/frontalLobe.jpeg" alt="Frontal Lobe MRI" class="lobe-img">
+            <p>The <strong>Frontal Lobe</strong> is the largest of the four major lobes of the mammalian cerebral
+                cortex. Situated at the front of each cerebral hemisphere, it is responsible for higher-level cognitive
+                functions, including decision-making, executive control, problem-solving, planning, and voluntary
+                movement.</p>
+            <p>It houses the <strong>Primary Motor Cortex (M1)</strong> along the precentral gyrus, which initiates
+                voluntary movements by sending signals down the corticospinal tract. Additionally, the dominant
+                hemisphere (typically the left) contains <strong>Broca's area</strong>, a region essential for the
+                orchestration of speech production and language articulation.</p>
+        </div>
+        <div data-category="parietal-info">
+            <img src="images/parietalLobe.jpeg" alt="Parietal Lobe MRI" class="lobe-img">
+            <p>The <strong>Parietal Lobe</strong> is positioned above the temporal lobe and behind the frontal lobe. It
+                functions as a critical hub for integrating sensory information from various modalities, particularly
+                determining spatial sense and navigation (proprioception).</p>
+            <p>Along the postcentral gyrus lies the <strong>Primary Somatosensory Cortex (S1)</strong>, mapped as a
+                sensory homunculus, which processes cutaneous sensations such as touch, temperature, and pain. The
+                posterior parietal cortex heavily integrates visual inputs with proprioception to guide movements and
+                maintain a coherent representation of the body in space.</p>
+        </div>
+        <div data-category="occipital-info">
+            <img src="images/occ.jpeg" alt="Occipital Lobe MRI" class="lobe-img">
+            <p>The <strong>Occipital Lobe</strong> is the visual processing center of the mammalian brain containing
+                most of the anatomical region of the visual cortex. Located at the very back of the skull, it receives
+                heavily processed afferent signals from the retinas via the optic tracts and lateral geniculate nucleus
+                (LGN).</p>
+            <p>It contains the <strong>Primary Visual Cortex (V1)</strong> in the calcarine fissure, mapping visual
+                space retinotopically. From V1, information diverges into the dorsal "where" stream (for spatial
+                location and action) toward the parietal lobe, and the ventral "what" stream (for object recognition and
+                form) toward the temporal lobe.</p>
+        </div>
+        <div data-category="temporal-info">
+            <img src="images/temporal.png" alt="Temporal Lobe MRI" class="lobe-img">
+            <p>The <strong>Temporal Lobe</strong> is situated laterally, beneath the lateral fissure on both cerebral
+                hemispheres. It is deeply involved in processing sensory input into derived meanings for the appropriate
+                retention of visual memory, language comprehension, and emotion association.</p>
+            <p>It houses the <strong>Primary Auditory Cortex</strong> for interpreting sounds at specific frequencies
+                (tonotopic mapping). In the dominant hemisphere, it contains <strong>Wernicke's Area</strong>, crucial
+                for language comprehension. Deep medially, the temporal lobe encompasses the limbic system structures,
+                most notably the <strong>hippocampus</strong> (declarative memory formation) and the
+                <strong>amygdala</strong> (emotional processing and fear modulation).
+            </p>
+        </div>
+        <div data-category="cerebellum-info">
+            <img src="images/cerebellum.jpeg" alt="Cerebellum MRI" class="lobe-img">
+            <p>The <strong>Cerebellum</strong> ("little brain") sits at the posterior base of the brain, just above the
+                brainstem. While it contains over 50% of the brain's total neurons, it does not initiate movement;
+                rather, it intricately fine-tunes motor commands from the cerebrum for fluid, balanced, and precise
+                voluntary motion.</p>
+            <p>It analyzes proprioceptive feedback from the spinocerebellar tracts and compares it with intended motor
+                commands continuously to resolve "motor error." The cerebellum is heavily involved in <strong>motor
+                    learning</strong>, classical conditioning, procedural memory formation, and maintaining posture and
+                equilibrium via the vestibular system.</p>
+        </div>
 
         <!-- Frontal Lobe: Entrepreneurship -->
         <div data-category="frontal">
